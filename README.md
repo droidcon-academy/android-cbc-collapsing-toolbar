@@ -1,2 +1,2 @@
 # Study materials and source code for **Droidcon Academy** course 
-> # Add Course Name 
+> # Collapsing Toolbar in Android Jetpack Compose: Using Multiple Approaches
