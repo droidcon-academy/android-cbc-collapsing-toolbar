@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CollapsibleToolbars</string>
+    <string name="artists">Artists</string>
+    <string name="top_songs">Top Songs</string>
+</resources>

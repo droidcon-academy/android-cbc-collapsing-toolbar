@@ -1,0 +1,48 @@
+[versions]
+androidx-activity-compose-version = "1.7.2"
+androidx-compose-bom-version = "2023.08.00"
+androidx-compose-compiler-version = "1.5.0"
+androidx-compose-material-icons-extended-version = "1.5.0"
+androidx-core-ktx-version = "1.10.1"
+androidx-lifecycle-version = "2.6.1"
+androidx-navigation-compose-version = "2.7.0"
+com-android-tools-build-gradle-version = "8.1.1"
+io-coil-kt-compose-version = "2.4.0"
+org-jetbrains-kotlin-gradle-plugin-version = "1.9.0"
+
+[libraries]
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose-version" }
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-bom-version" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "androidx-compose-material-icons-extended-version" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidx-compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui" }
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-ktx-version" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle-version" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-version" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation-compose-version" }
+com-android-tools-build-gradle = { module = "com.android.tools.build:gradle", version.ref = "com-android-tools-build-gradle-version" }
+io-coil-kt-compose = { module = "io.coil-kt:coil-compose", version.ref = "io-coil-kt-compose-version" }
+org-jetbrains-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "org-jetbrains-kotlin-gradle-plugin-version" }
+
+[plugins]
+com-android-application-plugin = { id = "com.android.application", version.ref = "com-android-tools-build-gradle-version" }
+com-android-library-plugin = { id = "com.android.library", version.ref = "com-android-tools-build-gradle-version" }
+
+[bundles]
+compose = [
+    "androidx-compose-material3",
+    "androidx.compose-ui-tooling-preview",
+    "androidx-compose-ui",
+    "androidx-lifecycle-runtime-compose",
+    "androidx-compose-material-icons-extended",
+    "androidx-activity-compose",
+    "androidx-navigation-compose"
+]
+compose-tooling = [
+    "androidx-compose-ui-tooling",
+    "androidx-compose-ui-test-manifest",
+]
