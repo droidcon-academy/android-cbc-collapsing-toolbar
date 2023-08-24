@@ -6,6 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -97,86 +98,99 @@ fun NestedScrollConnectionToolbar(
         ) {
             item { content() }
         }
-        CollapsingToolbar(
-            toolbarOffsetHeightPx = toolbarOffsetHeightPx.floatValue.roundToInt(),
-            alphaExpanded = alphaExpandedTopAppBar.value,
-            title = title,
-            onBack = onBack,
-            imageUrl = imageUrl,
-        )
+        Box(modifier = Modifier.fillMaxWidth()) {
+            CollapsedToolbar(
+                alphaExpanded = alphaExpandedTopAppBar.value,
+                title = title,
+                onBack = onBack,
+            )
+            ExpandedToolbar(
+                alphaExpanded = alphaExpandedTopAppBar.value,
+                toolbarOffsetHeightPx = toolbarOffsetHeightPx.floatValue.roundToInt(),
+                imageUrl = imageUrl,
+                title = title,
+                onBack = onBack,
+            )
+        }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun CollapsingToolbar(
-    toolbarOffsetHeightPx: Int,
+@OptIn(ExperimentalMaterial3Api::class)
+private fun CollapsedToolbar(
     alphaExpanded: Float,
     title: String,
-    imageUrl: String,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = Modifier.fillMaxWidth()) {
-        CenterAlignedTopAppBar(
-            modifier = modifier
-                .statusBarsPadding()
-                .alpha(abs(1 - alphaExpanded)),
-            colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
-            title = {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .wrapContentSize(Alignment.Center)
-                )
-            },
-            navigationIcon = {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = null
-                    )
-                }
-            },
-        )
-        Box(
-            modifier = Modifier
-                .alpha(alphaExpanded)
-                .offset { IntOffset(x = 0, y = toolbarOffsetHeightPx) }
-                .height(expandedToolbarHeight)
-                .fillMaxWidth()
-                .background(color = MaterialTheme.colorScheme.primary),
-        ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(imageUrl)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = title,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.align(alignment = Alignment.Center),
-            )
+    CenterAlignedTopAppBar(
+        modifier = modifier
+            .statusBarsPadding()
+            .alpha(abs(1 - alphaExpanded)),
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
+        title = {
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier
-                    .padding(all = 16.dp)
-                    .align(Alignment.BottomStart)
+                    .fillMaxSize()
+                    .wrapContentSize(Alignment.Center)
             )
-        }
-        IconButton(
-            onClick = onBack,
+        },
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = null
+                )
+            }
+        },
+    )
+}
+
+@Composable
+private fun BoxScope.ExpandedToolbar(
+    alphaExpanded: Float,
+    toolbarOffsetHeightPx: Int,
+    imageUrl: String,
+    title: String,
+    onBack: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .alpha(alphaExpanded)
+            .offset { IntOffset(x = 0, y = toolbarOffsetHeightPx) }
+            .height(expandedToolbarHeight)
+            .fillMaxWidth()
+            .background(color = MaterialTheme.colorScheme.primary),
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imageUrl)
+                .crossfade(true)
+                .build(),
+            contentDescription = title,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.align(alignment = Alignment.Center),
+        )
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
-                .alpha(alphaExpanded)
-                .padding(top = 8.dp, start = 4.dp)
-                .align(Alignment.TopStart)
-        ) {
-            Icon(
-                imageVector = Icons.Filled.ArrowBack,
-                contentDescription = null
-            )
-        }
+                .padding(all = 16.dp)
+                .align(Alignment.BottomStart)
+        )
+    }
+    IconButton(
+        onClick = onBack,
+        modifier = Modifier
+            .alpha(alphaExpanded)
+            .padding(top = 8.dp, start = 4.dp)
+            .align(Alignment.TopStart)
+    ) {
+        Icon(
+            imageVector = Icons.Filled.ArrowBack,
+            contentDescription = null
+        )
     }
 }
